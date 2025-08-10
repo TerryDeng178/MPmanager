@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>操作结果 - 微信公众号内容管理工具</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>操作结果</h1>
+
+    {% if ok %}
+      <div class="alert success">{{ message }}</div>
+      <div class="card">
+        <h2>详情</h2>
+        {% if simulate %}
+          <p class="tip">当前为模拟模式，未调用微信接口。</p>
+        {% endif %}
+        {% if media_id %}
+          <p>草稿 media_id：<code>{{ media_id }}</code></p>
+        {% endif %}
+        {% if publish %}
+          <pre>{{ publish }}</pre>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="alert error">{{ message }}</div>
+    {% endif %}
+
+    <a class="button" href="/">返回主页</a>
+  </div>
+</body>
+</html>

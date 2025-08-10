@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>预览 - 微信公众号内容管理工具</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    pre{white-space:pre-wrap;word-break:break-word}
+    .pane{background:rgba(17,24,39,.7);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:16px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>生成结果预览</h1>
+    {% if simulate %}<p class="tip">提示：当前为模拟模式。</p>{% endif %}
+
+    <div class="card">
+      <h2>基础信息</h2>
+      <p>标题：{{ title }}</p>
+      <p>作者：{{ author }}</p>
+      <p>风格：{{ style }} | 段落数：{{ paragraphs }} | 目录：{{ '是' if toc else '否' }}</p>
+      {% if keywords %}<p>关键词：{{ keywords }}</p>{% endif %}
+      {% if summary %}<p>摘要：{{ summary }}</p>{% endif %}
+    </div>
+
+    <div class="two-col">
+      <div class="pane">
+        <h2>Markdown</h2>
+        <pre>{{ md }}</pre>
+      </div>
+      <div class="pane">
+        <h2>HTML</h2>
+        <div>{{ html | safe }}</div>
+      </div>
+    </div>
+
+    <p style="margin-top:16px">
+      <a class="button" href="/">返回修改</a>
+    </p>
+  </div>
+</body>
+</html>

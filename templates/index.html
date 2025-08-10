@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>微信公众号内容管理工具</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>微信公众号内容管理工具</h1>
+
+    <section class="card">
+      <h2>配置微信公众号</h2>
+      <form action="/save-config" method="post" class="form-grid">
+        <label>
+          AppID
+          <input type="text" name="appid" value="{{ config.appid }}" />
+        </label>
+        <label>
+          AppSecret
+          <input type="password" name="appsecret" value="{{ config.appsecret }}" />
+        </label>
+        <label class="row">
+          <input type="checkbox" name="simulate" value="true" {% if config.simulate %}checked{% endif %} /> 模拟模式（不调用微信接口）
+        </label>
+        <button type="submit">保存配置</button>
+      </form>
+      <p class="tip">提示：未配置 AppID/AppSecret 或暂未开通接口权限时，可开启“模拟模式”进行全流程演示。</p>
+    </section>
+
+    <section class="card">
+      <h2>生成与上传</h2>
+      <form action="/generate-upload" method="post" enctype="multipart/form-data" class="form-grid">
+        <label>
+          标题
+          <input type="text" name="title" placeholder="请输入文章标题" required />
+        </label>
+        <label>
+          关键词（逗号分隔）
+          <input type="text" name="keywords" placeholder="如：AIGC, 垂直行业, 增长" />
+        </label>
+        <label class="full">
+          摘要
+          <textarea name="summary" rows="3" placeholder="用于文章摘要以及草稿摘要"></textarea>
+        </label>
+        <label>
+          作者
+          <input type="text" name="author" placeholder="可选" />
+        </label>
+        <label>
+          写作风格
+          <select name="style">
+            <option value="通用">通用</option>
+            <option value="科普">科普</option>
+            <option value="行业分析">行业分析</option>
+            <option value="活动推文">活动推文</option>
+          </select>
+        </label>
+        <label>
+          段落数
+          <input type="number" name="paragraphs" min="2" max="12" value="4" />
+        </label>
+        <label class="row">
+          <input type="checkbox" name="toc" value="true" /> 自动生成目录（TOC）
+        </label>
+        <label>
+          封面图
+          <input type="file" name="cover_image" accept="image/*" {% if not config.simulate %}required{% endif %} />
+        </label>
+        <label class="row">
+          <input type="checkbox" name="auto_publish" value="true" /> 自动提交发布
+        </label>
+        <div class="row">
+          <button type="submit">一键生成并上传</button>
+          <button type="submit" formaction="/preview" formmethod="post">仅预览生成效果</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</body>
+</html>
